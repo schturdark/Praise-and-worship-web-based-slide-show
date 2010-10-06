@@ -24,7 +24,7 @@
 			var selected = $('#songs').val();
 			
 			if(selected) {
-				$('#result').empty().append('<a target="_blank" href="slide.php?songs='+selected+'">Launch slide show: '+selected+'</a>');
+				$('#result').empty().append('<a target="_blank" href="slide.php?songs='+encodeURIComponent(selected)+'">Launch slide show: '+selected+'</a>');
 				saveState();
 			} else {
 				$('#result').empty();
@@ -67,7 +67,7 @@
 					$('#songs').children('[value='+objValue+']').attr('selected','selected');
 				});
 				
-				$('#result').empty().append('<a target="_blank" href="slide.php?songs='+selected+'">Launch slide show: '+selected+'</a>')
+				$('#result').empty().append('<a target="_blank" href="slide.php?songs='+encodeURIComponent(selected)+'">Launch slide show: '+selected+'</a>')
 			}
 		}
 
