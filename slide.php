@@ -71,10 +71,13 @@
 				<h3>[Enter the subtitle here]</h3>				
 				<div class="handout"></div>
 			</div>
+			
+			<?php $beforeisemptyline = FALSE;?>
 
 			<?php $handle = opendir('.');?>
 			<?php $selected = $_REQUEST['songs'];?>
-			<?php $songs = explode(',',$selected);?>
+			<?php $songs = explode(',',$selected);?>		
+			
 			<?php foreach ($songs as $song):?>
 			
 			<?php $file = $song.'.txt';?>
