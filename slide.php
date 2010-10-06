@@ -1,9 +1,12 @@
+<?php $title = $_REQUEST['title'];?>
+<?php $subtitle = $_REQUEST['subtitle'];?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		<title>[Enter the browser title here]</title>
+		<title><?php echo $title;?></title>
 		<!-- metadata -->
 		<meta name="generator" content="S5" />
 		<meta name="version" content="S5 1.1" />
@@ -67,8 +70,8 @@
 		<div class="presentation">
 		
 			<div class="slide">
-				<h1>[Enter your title here]</h1>
-				<h3>[Enter the subtitle here]</h3>				
+				<h1><?php echo $title;?></h1>
+				<h3><?php echo $subtitle;?></h3>				
 				<div class="handout"></div>
 			</div>
 			

@@ -22,9 +22,11 @@
 		
 		function getSelected() {
 			var selected = $('#songs').val();
+			var title = $('#title').val();
+			var subtitle = $('#subtitle').val();
 			
 			if(selected) {
-				$('#result').empty().append('<a target="_blank" href="slide.php?songs='+encodeURIComponent(selected)+'">Launch slide show: '+selected+'</a>');
+				$('#result').empty().append('<a target="_blank" href="slide.php?title='+encodeURIComponent(title)+'&subtitle='+encodeURIComponent(subtitle)+'&songs='+encodeURIComponent(selected)+'">Launch slide show: '+selected+'</a>');
 				saveState();
 			} else {
 				$('#result').empty();
@@ -43,6 +45,8 @@
 			
 			localStorage["slides.resume"] = 'true';			
 			localStorage["slides.selected"] = $('#songs').val();
+			localStorage["slides.title"] = $('#title').val();
+			localStorage["slides.subtitle"] = $('#subtitle').val();
 		}
 		
 		function clearState() {
@@ -52,6 +56,8 @@
 			
 			localStorage.removeItem("slides.resume");			
 			localStorage.removeItem("slides.selected");			
+			localStorage.removeItem("slides.subtitle");			
+			localStorage.removeItem("slides.title");			
 		}
 		
 		function continueManageSlides() {
@@ -60,15 +66,25 @@
 			var resume = (localStorage["slides.resume"] == "true");			
 			if(!resume) {return false;}
 			
+			var title = localStorage['slides.title'];
+			if(title) {
+				$('#title').val(title);
+			}
+			
+			var subtitle = localStorage['slides.subtitle'];
+			if(subtitle) {
+				$('#subtitle').val(subtitle);
+			}
+			
 			var selected = localStorage['slides.selected'];
 			if(selected) {
 				var songs = selected.split(',');
 				$.each(songs, function(intIndex, objValue) {
 					$('#songs').children('[value='+objValue+']').attr('selected','selected');
 				});
-				
-				$('#result').empty().append('<a target="_blank" href="slide.php?songs='+encodeURIComponent(selected)+'">Launch slide show: '+selected+'</a>')
 			}
+			
+			$('#result').empty().append('<a target="_blank" href="slide.php?title='+encodeURIComponent(title)+'&subtitle='+encodeURIComponent(subtitle)+'&songs='+encodeURIComponent(selected)+'">Launch slide show: '+selected+'</a>')
 		}
 
 	</script>
@@ -77,6 +93,13 @@
 	<link rel="stylesheet" type="text/css" href="example.css">
 </head>
 <body>
+<label for="title">Title</label>
+<input id="title" name="title" type="text" placeholder="Enter the title of the slideshow here" />
+
+<label for="subtitle">Subtitle</label>
+<input id="subtitle" name="subtitle" type="text" placeholder="Enter the subtitle of the slideshow here" />
+
+<label for="songs">Songs</label>
 <select id="songs" name="songs" multiple="multiple" title="Please select a song">
 <?php
 if ($handle = opendir('.')) {
