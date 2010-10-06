@@ -10,6 +10,8 @@
 	<script type="text/javascript">
 
 		$(document).ready(function() {
+			continueManageSlides();
+			
 			$("select[multiple]").asmSelect({
 				addItemTarget: 'bottom',
 				animate: true,
@@ -20,7 +22,53 @@
 		
 		function getSelected() {
 			var selected = $('#songs').val();
-			$('#result').empty().append('<a target="_blank" href="slide.php?songs='+selected+'">Launch slide show: '+selected+'</a>')
+			
+			if(selected) {
+				$('#result').empty().append('<a target="_blank" href="slide.php?songs='+selected+'">Launch slide show: '+selected+'</a>');
+				saveState();
+			} else {
+				$('#result').empty();
+				clearState();
+			}			
+		}
+		
+		function supportsLocalStorage() {
+			return ('localStorage' in window) && window['localStorage'] !== null;
+		}
+		
+		function saveState() {
+			if (!supportsLocalStorage()) { 
+				return false; 
+			}
+			
+			localStorage["slides.resume"] = 'true';			
+			localStorage["slides.selected"] = $('#songs').val();
+		}
+		
+		function clearState() {
+			if (!supportsLocalStorage()) { 
+				return false; 
+			}
+			
+			localStorage.removeItem("slides.resume");			
+			localStorage.removeItem("slides.selected");			
+		}
+		
+		function continueManageSlides() {
+			if (!supportsLocalStorage()) { return false; }
+			
+			var resume = (localStorage["slides.resume"] == "true");			
+			if(!resume) {return false;}
+			
+			var selected = localStorage['slides.selected'];
+			if(selected) {
+				var songs = selected.split(',');
+				$.each(songs, function(intIndex, objValue) {
+					$('#songs').children('[value='+objValue+']').attr('selected','selected');
+				});
+				
+				$('#result').empty().append('<a target="_blank" href="slide.php?songs='+selected+'">Launch slide show: '+selected+'</a>')
+			}
 		}
 
 	</script>
