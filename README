@@ -1,0 +1,3 @@
+To use this, XAMPP (Windows) or MAMP (Mac) is needed because it needs php and local server to run on the computer.
+
+To add new songs into the selection list, just create a new txt file in the same folder as the index.php. The title of the song is taken from the txt file name. The lyric is taken from the content of the txt file.
